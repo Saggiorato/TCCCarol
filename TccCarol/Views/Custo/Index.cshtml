@@ -1,0 +1,169 @@
+﻿<div id="custo">
+    <!--CORPO-->
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <!--LISTA-->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header-custom">
+                            <h4 class="box-title">
+                                CÁLCULO DE CUSTOS
+                            </h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Data Inicial</label>
+                                        <input-databr type="text" class="form-control" v-model="DataInicial"></input-databr>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Data Inicial</label>
+                                        <input-databr type="text" class="form-control" v-model="DataFinal"></input-databr>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">&nbsp;</label>
+                                        <div class="clearfix"></div>
+                                        <button type="submit" class="btn btn-primary" v-on:click="ObterDados"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Filtrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body--">
+                            <div class="table-stats order-table ov-h">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="10%">Produto</th>
+                                            <th scope="col">Custo Compra</th>
+                                            <th scope="col">Outras Despesas</th>
+                                            <th scope="col">Desp. com Vendas</th>
+                                            <th scope="col">Custo Por Produto</th>
+                                            <th scope="col">Preco de Venda</th>
+                                            <th scope="col">Margem do Produto R$</th>
+                                            <th scope="col">Margem do Produto %</th>
+                                            <th scope="col">Qtde de Vendas</th>
+                                            <th scope="col">Total Despesa Variáveis</th>
+                                            <th scope="col">Faturamento R$</th>
+                                            <th scope="col">% Sobre Faturamento</th>
+                                            <th scope="col">Markup Fator</th>
+                                            <th scope="col">Markup %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in Lista">
+                                            <td>{{item.NomeProduto}}</td>
+                                            <td>R$ <moedabr :value="item.CustoCompra"></moedabr></td>
+                                            <td>R$ <moedabr :value="item.OutrasDespesas"></moedabr></td>
+                                            <td><moedabr :value="item.DespesasComVendas"></moedabr>%</td>
+                                            <td>R$ <moedabr :value="item.CustoPorProduto"></moedabr></td>
+                                            <td>R$ <moedabr :value="item.PrecoVenda"></moedabr></td>
+                                            <td>R$ <moedabr :value="item.MargemProdutoValor"></moedabr></td>
+                                            <td><moedabr :value="item.MargemProdutoPorcentagem"></moedabr>%</td>
+                                            <td>{{item.QuantidadeVendas}}</td>
+                                            <td>R$ <moedabr :value="item.TotalDespesasVariavel"></moedabr></td>
+                                            <td>R$ <moedabr :value="item.Faturamento"></moedabr></td>
+                                            <td><moedabr :value="item.PorcentagemFaturamento"></moedabr>%</td>
+                                            <td><moedabr :value="item.MarkupFator"></moedabr></td>
+                                            <td>{{item.MarkupPorcentagem}}%</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot class="">
+                                        <tr>
+                                            <th>Totais</th>
+                                            <th>R$ <moedabr :value="Totais.CustoCompra"></moedabr></th>
+                                            <th>R$ <moedabr :value="Totais.OutrasDespesas"></moedabr></th>
+                                            <th>-</th>
+                                            <th>R$ <moedabr :value="Totais.CustoPorProduto"></moedabr></th>
+                                            <th>R$ <moedabr :value="Totais.PrecoVenda"></moedabr></th>
+                                            <th>R$ <moedabr :value="Totais.MargemProdutoValor"></moedabr></th>
+                                            <th><moedabr :value="Totais.MargemProdutoPorcentagem"></moedabr>%</th>
+                                            <th>{{Totais.QuantidadeVendas}}</th>
+                                            <th>R$ <moedabr :value="Totais.TotalDespesasVariavel"></moedabr></th>
+                                            <th>R$ <moedabr :value="Totais.Faturamento"></moedabr></th>
+                                            <th>100%</th>
+                                            <th>-</th>
+                                            <th>-</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div> <!-- /.table-stats -->
+                        </div>
+
+                        <hr />
+
+
+                        <div class="card-body--">
+                            <div class="table-stats ov-h">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Despesas Fixas</td>
+                                                    <td>R$ <moedabr :value="Totais.DespesasFixas"></moedabr></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Despesas Variáveis
+                                                    </td>
+                                                    <td>R$ <moedabr :value="Totais.DespesasVariaveis"></moedabr></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Despesas com Vendas
+                                                    </td>
+                                                    <td><moedabr :value="Totais.DespesasComVendas"></moedabr>%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-2"></div>
+                                    <div class="col-5">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Faturamento Total
+                                                    </td>
+                                                    <td>R$ <moedabr :value="Totais.FaturamentoTotal"></moedabr></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Margem de Lucro
+
+                                                    </td>
+                                                    <td>R$ <moedabr :value="Totais.MargemLucro"></moedabr><moedabr style="margin-left: 50px" :value="Totais.MargemLucro / Totais.FaturamentoTotal * 100"></moedabr>%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Ponto de Equilíbrio
+
+                                                    </td>
+                                                    <td>R$ <moedabr :value="Totais.PontoEquilibrio"></moedabr></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+<script src="~/js/custo/custo.js"></script>
+}

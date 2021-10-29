@@ -1,0 +1,141 @@
+﻿<div id="compra-venda">
+    <!--CORPO-->
+    <div class="content">
+        <div class="animated fadeIn">
+
+            <div class="row">
+                <!--LISTA-->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header-custom">
+                            <h4 class="box-title">
+                                COMPRAS E VENDAS
+                                <button type="submit" class="btn btn-success btn-sm float-right" v-on:click="AbrirModal"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Adicionar</button>
+                            </h4>
+                        </div>
+                        <div class="card-body--">
+                            <div class="table-stats order-table ov-h">
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="5%">Tipo</th>
+                                            <th scope="col" width="5%">Data</th>
+                                            <th scope="col" width="15%">Produto</th>
+                                            <th scope="col" width="15%">Cliente/Fornecedor</th>
+                                            <th scope="col" width="5%">Quantidade</th>
+                                            <th scope="col" width="10%">Preço</th>
+                                            <th scope="col" width="10%">Total</th>
+                                            <th scope="col" width="8%">Observação</th>
+                                            <th scope="col" width="25%">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in Lista">
+                                            <td>
+                                                <span v-if="item.Venda">Venda</span>
+                                                <span v-if="!item.Venda">Compra</span>
+                                            </td>
+                                            <td><databr :value="item.Data"></databr></td>
+                                            <td>{{item.Produto ? item.Produto.Nome : "-"}}</td>
+                                            <td>{{item.ClienteFornecedor ? item.ClienteFornecedor.Nome : " - "}}</td>
+                                            <td>{{item.Quantidade}}</td>
+                                            <td class="">R$ {{item.Preco}}</td>
+                                            <td class="">R$ {{item.Total}}</td>
+                                            <td>{{item.Observacao}}</td>
+                                            <td>
+                                                <button type="submit" class="btn btn-success btn-sm" v-on:click="Editar(item, index)"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Alterar</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" v-on:click="Excluir(item.Id, index)"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Excluir</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> <!-- /.table-stats -->
+                        </div>
+                    </div> <!-- /.card -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--MODAL CADASTRO-->
+    <div class="modal" tabindex="-1" role="dialog" id="cadastro">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title">Registrar Vendas/Compras</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--CADASTRO-->
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Tipo</label>
+                                <select type="text" class="form-control" v-model="Venda">
+                                    <option value="true">Venda</option>
+                                    <option value="true">Compra</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Data</label>
+                                <input-databr type="text" class="form-control" v-model="Data" style="padding-left:3px; padding-right:3px;"></input-databr>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label mb-1">
+                                Produto
+                            </label>
+                            <div class="input-group">
+                                <select class="form-control" v-model="Produto">
+                                    <option value="0">Selecione</option>
+                                    <option v-for="item in Produtos" v-bind:value="{Id: item.Id, Nome: item.Nome}">{{item.Nome}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <label class="control-label mb-1">Quantidade</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" v-model="Quantidade">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <label class="control-label mb-1">Preço</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="Preco"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Cliente/Fornecedor</label>
+                                <select type="text" class="form-control" v-model="ClienteFornecedor">
+                                    <option v-for="item in Pessoas" v-bind:value="{Id: item.Id, Nome: item.Nome}">{{item.Nome}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="control-label mb-1">Observação</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" v-model="Observacao">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" v-on:click="Gravar"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/compra-venda/compra-venda.js"></script>
+}

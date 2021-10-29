@@ -1,0 +1,115 @@
+﻿<div id="despesa">
+    <!--CORPO-->
+    <div class="content">
+        <div class="animated fadeIn">
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header-custom">
+                            <strong class="card-title">DESPESAS</strong>
+                        </div>
+                        <div class="card-body">
+
+                            <!--CADASTRO-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong class="card-title">Cadastrar</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Data</label>
+                                        <input-databr class="form-control" v-model="Data"></input-databr>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label mb-1">Tipo da Despesa</label>
+                                    <div class="input-group">
+                                        <select class="form-control" v-model="TipoDespesa">
+                                            <option value="0">Selecione</option>
+                                            <option v-for="tipo in TiposDespesas" v-bind:value="{Id: tipo.Id, Descricao: tipo.Descricao}">{{tipo.Descricao}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label class="control-label mb-1">Porcentagem?</label>
+                                    <div class="input-group">
+                                        <input type="checkbox" class="form-control" v-model="Porcentagem">
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label class="control-label mb-1">Valor</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-right" v-model="Valor">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Observação</label>
+                                        <input type="text" class="form-control" v-model="Observacao" />
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label class="control-label mb-1">&nbsp;</label>
+                                    <div class="clearfix"></div>
+                                    <button type="submit" class="btn btn-primary" v-on:click="Gravar"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Salvar</button>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <!--PESQUISA-->
+                            @*<div class="row">
+                                <div class="col-md-12">
+                                    <strong class="card-title">Pesquisar</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Busque uma despesa">
+                                    </div>
+                                </div>
+
+                            </div>*@
+                        </div>
+
+                        <!--TABELA-->
+                        <div class="card-body--">
+                            <div class="table-stats order-table ov-h">
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="15%">Data</th>
+                                            <th scope="col" width="20%">Tipo da Despesa</th>
+                                            <th scope="col" width="10%">Valor</th>
+                                            <th scope="col" width="40%">Observação</th>
+                                            <th scope="col" width="15%">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(despesa, index) in Despesas">
+                                            <td><databr :value="despesa.Data"></databr></td>
+                                            <td>{{despesa.TipoDespesa.Descricao}}</td>
+                                            <td>{{despesa.Porcentagem ? despesa.Valor + '%' : 'R$ ' + despesa.Valor}}</td>
+                                            <td>{{despesa.Observacao}}</td>
+                                            <td>
+                                                <button type="submit" class="btn btn-success btn-sm" v-on:click="Editar(despesa, index)"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Alterar</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" v-on:click="Excluir(despesa.Id, index)"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Excluir</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> <!-- /.table-stats -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/despesa/despesa.js"></script>
+}

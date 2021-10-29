@@ -1,0 +1,95 @@
+﻿<div id="graficos">
+    <div class="content">
+        <div class="animated fadeIn">
+
+            <div class="card">
+                <div class="card-header-custom">
+                    <h4 class="box-title">
+                        GRÁFICOS
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Data Inicial</label>
+                                <input-databr type="text" class="form-control" v-model="DataInicial"></input-databr>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Data Inicial</label>
+                                <input-databr type="text" class="form-control" v-model="DataFinal"></input-databr>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label class="control-label mb-1">&nbsp;</label>
+                                <div class="clearfix"></div>
+                                <button type="submit" class="btn btn-primary" v-on:click="ObterDados"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Filtrar</button>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label mb-1">&nbsp;</label>
+                                <div class="clearfix"></div>
+                                <button v-if="!Expandido" type="submit" class="btn btn-success" v-on:click="ExpandirRetrair"><i class="fa fa-expand" aria-hidden="true"></i>&nbsp;Expandir</button>
+                                <button v-if="Expandido" type="submit" class="btn btn-success" v-on:click="ExpandirRetrair"><i class="fa fa-compress" aria-hidden="true"></i>&nbsp;Retrair</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div :class="Expandido ? 'col-lg-12' : 'col-lg-6'">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-3">Margem de Lucros por Produtos</h4>
+                            <canvas id="lucro-produto"></canvas>
+                        </div>
+                    </div>
+                </div><!-- /# column -->
+
+                <div :class="Expandido ? 'col-lg-12' : 'col-lg-6'">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-3">% de Faturamento por Produto </h4>
+                            <canvas id="faturamento-produto"></canvas>
+                        </div>
+                    </div>
+                </div><!-- /# column -->
+
+                <div :class="Expandido ? 'col-lg-12' : 'col-lg-6'">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-3">Faturamento por Unidade</h4>
+                            <canvas id="faturamento-unidade"></canvas>
+                        </div>
+                    </div>
+                </div><!-- /# column -->
+
+
+                <div :class="Expandido ? 'col-lg-12' : 'col-lg-6'">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-3">Despesas </h4>
+                            <canvas id="despesas"></canvas>
+                        </div>
+                    </div>
+                </div><!-- /# column -->
+            </div>
+        </div>
+    </div><!-- .animated -->
+</div>
+
+@section Scripts{
+
+
+    <!--  Chart js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+    <script src="~/js/graficos/graficos.js"></script>
+    <script src="assets/js/init/chartjs-init.js"></script>
+}

@@ -1,0 +1,99 @@
+﻿<div id="tipo-despesa">
+    <!--CORPO-->
+    <div class="content">
+        <div class="animated fadeIn">
+
+            <div class="row">
+                <!--LISTA-->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header-custom">
+                            <h4 class="box-title">
+                                TIPOS DE DESPESAS
+                                <button type="submit" class="btn btn-success btn-sm float-right" v-on:click="AbrirModal"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Adicionar</button>
+                            </h4>
+                        </div>
+                        <div class="card-body--">
+                            <div class="table-stats order-table ov-h">
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="30%">Nome</th>
+                                            <th scope="col" width="10%">Valor</th>
+                                            <th scope="col" width="40%">Observação</th>
+                                            <th scope="col" width="15%">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(despesa, index) in TiposDespesas">
+                                            <td>{{despesa.Descricao}}</td>
+                                            <td>{{despesa.ValorFixo == 0 ? "" : despesa.ValorFixo}}</td>
+                                            <td>{{despesa.Observacao}}</td>
+                                            <td>
+                                                <button type="submit" class="btn btn-success btn-sm" v-on:click="Editar(despesa, index)"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Alterar</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" v-on:click="Excluir(despesa.Id, index)"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Excluir</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> <!-- /.table-stats -->
+                        </div>
+                    </div> <!-- /.card -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--MODAL CADASTRO-->
+    <div class="modal" tabindex="-1" role="dialog" id="cadastro">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title">Cadastrar Novo Tipo de Despesa</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--CADASTRO-->
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Descrição da Despesa</label>
+                                <input type="text" class="form-control" placeholder="Exemplo: Água" v-model="Descricao">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="control-label mb-1">Valor Fixo</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" placeholder="Se a despesa tiver valor fixo" v-model="ValorFixo">
+                                @*<div class="input-group-addon">
+                                        <span class="fa fa-question-circle fa-lg" data-toggle="popover" data-container="body" data-html="true" data-title="Security Code"
+                                              data-content="<div class='text-center one-card'>The 3 digit code on back of the card..<div class='visa-mc-cvc-preview'></div></div>"
+                                              data-trigger="hover"></span>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Observação</label>
+                                <textarea type="text" class="form-control" v-model="Observacao"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" v-on:click="Gravar"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script src="~/js/despesa/tipo-despesa.js"></script>
+}

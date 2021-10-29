@@ -1,0 +1,220 @@
+﻿<div id="produto">
+    <!--CORPO-->
+    <div class="content">
+        <div class="animated fadeIn">
+
+            <div class="row">
+                <!--LISTA-->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header-custom">
+                            <h4 class="box-title">
+                                PRODUTOS
+                                <button type="submit" class="btn btn-success btn-sm float-right" v-on:click="AbrirModal"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Adicionar</button>
+                            </h4>
+                        </div>
+                        <div class="card-body--">
+                            <div class="table-stats order-table ov-h">
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="25%">Nome</th>
+                                            <th scope="col" width="10%">Preço</th>
+                                            <th scope="col" width="10%">Qtd. Produzida</th>
+                                            @*<th scope="col" width="10%">Fornecedor</th>*@
+                                            <th scope="col" width="10%">OutrasDespesas</th>
+                                            <th scope="col" width="25%">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(produto, index) in Produtos">
+                                            <td>{{produto.Nome}}</td>
+                                            <td>R$&nbsp;{{produto.PrecoAtual == 0 ? "" : produto.PrecoAtual}}/un</td>
+                                            <td>
+                                                {{produto.QuantidadeFabrica}} &nbsp;
+                                                <span v-if="produto.TipoMedida == 0" style="text-transform: lowercase !important;">ml</span>
+                                                <span v-if="produto.TipoMedida == 1" style="text-transform: lowercase !important;">l</span>
+                                                <span v-if="produto.TipoMedida == 2" style="text-transform: lowercase !important;" >g</span>
+                                                <span v-if="produto.TipoMedida == 3" style="text-transform: lowercase !important;">kg</span>
+                                                <span v-if="produto.TipoMedida == 4" style="text-transform: lowercase !important;">un</span>
+                                            </td>
+                                            @*<td>{{produto.Fornecedor ? produto.Fornecedor.Nome : ''}}</td>*@
+                                            <td>{{produto.OutrasDespesas}}</td>
+                                            <td>
+                                                <button type="submit" class="btn btn-info btn-sm" v-on:click="AbrirModalIngredientes(produto.Id, produto.Nome)"><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;Ingredientes</button>
+                                                <button type="submit" class="btn btn-success btn-sm" v-on:click="Editar(produto, index)"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Alterar</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" v-on:click="Excluir(produto.Id, index)"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Excluir</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> <!-- /.table-stats -->
+                        </div>
+                    </div> <!-- /.card -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--MODAL CADASTRO-->
+    <div class="modal" tabindex="-1" role="dialog" id="cadastro">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title">Cadastrar Novo Produto</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--CADASTRO-->
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Nome do produto</label>
+                                <input type="text" class="form-control" v-model="Nome">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <label class="control-label mb-1">Preço</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="PrecoAtual">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <label class="control-label mb-1">Qtd. Produzida</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="QuantidadeFabrica">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <label class="control-label mb-1">Medida</label>
+                            <select type="text" class="form-control" v-model="TipoMedida">
+                                <option value="0">ML</option>
+                                <option value="1">L</option>
+                                <option value="2">G</option>
+                                <option value="3">KG</option>
+                                <option value="4">UN</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Fornecedor</label>
+                                <select type="text" class="form-control" v-model="Fornecedor">
+                                    <option value="0">Selecione</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <label class="control-label mb-1">Estoque</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="Estoque">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Outras Despesas</label>
+                                <input type="text" class="form-control" v-model="OutrasDespesas" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" v-on:click="Gravar"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL INGREDIENTES-->
+    <div class="modal" tabindex="-1" role="dialog" id="ingredientes">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title">Informar ingredientes do produto: {{ProdutoIngredienteNome}}</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--CADASTRO-->
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label mb-1">Ingrediente</label>
+                                <select type="text" class="form-control" v-model="Ingrediente" id="select-ingrediente">
+                                    <option v-for="item in ListaIngredientes" v-bind:value="{Id: item.Id, Nome: item.Nome}">{{item.Nome}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label class="control-label mb-1">Quantidade</label>
+                                    <input type="text" class="form-control" v-model="Quantidade">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <label class="control-label mb-1">Medida</label>
+                            <select type="text" class="form-control" v-model="TipoMedidaIngrediente">
+                                <option value="0">ML</option>
+                                <option value="1">L</option>
+                                <option value="2">G</option>
+                                <option value="3">KG</option>
+                                <option value="4">UN</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label class="control-label mb-1">&nbsp;</label>
+                                    <div class="clearfix"></div>
+                                    <button type="submit" class="btn btn-primary" v-on:click="AdicionarIngrediente"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Salvar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-stats order-table ov-h">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="75%">Nome</th>
+                                    <th scope="col" width="75%">Quantidade</th>
+                                    <th scope="col" width="25%">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(ingrediente, index) in Ingredientes">
+                                    <td>{{ingrediente.Ingrediente.Nome}}</td>
+                                    <td>
+                                        {{ingrediente.Quantidade}}&nbsp;
+                                        <span v-if="ingrediente.TipoMedida == 0">ml</span>
+                                        <span v-if="ingrediente.TipoMedida == 1">l</span>
+                                        <span v-if="ingrediente.TipoMedida == 2">g</span>
+                                        <span v-if="ingrediente.TipoMedida == 3">kg</span>
+                                        <span v-if="ingrediente.TipoMedida == 4">un</span>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-danger btn-sm" v-on:click="ExcluirIngrediente(ingrediente.Id, index)"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Excluir</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" v-on:click="AdicionarIngrediente"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Salvar</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/produto/produto.js"></script>
+}
